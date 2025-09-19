@@ -12,10 +12,11 @@ class _LoginPage extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('두 번째 페이지')),
+      backgroundColor: Colors.white,
+
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // SvgPicture.asset('assets/images/logo_image.svg'),
             Image.asset(
@@ -54,7 +55,7 @@ class _LoginPage extends State<LoginPage> {
 
                         ElevatedButton(
                           onPressed: () {
-                            print('버튼이 눌렸어요!');
+                            print('login button');
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue, // 배경색
@@ -67,17 +68,46 @@ class _LoginPage extends State<LoginPage> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5), // 둥근 모서리
                             ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 12,
-                            ),
+
                             textStyle: const TextStyle(
-                              fontSize: 18,
+                              fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Color(0xFF44A8BF),
                             ),
                           ),
                           child: const Text('Login'),
+                        ),
+
+                        SizedBox(height: 10.0),
+
+                        ElevatedButton(
+                          onPressed: () {
+                            print('Sing In button');
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white, // 배경색
+                            foregroundColor: Colors.blue, // 글자색
+                            minimumSize: const Size(
+                              double.infinity,
+                              50,
+                            ), // 최소 크기 (너비, 높이)
+                            elevation: 5, // 그림자 깊이
+
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5), // 둥근 모서리
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 12,
+                            ),
+
+                            textStyle: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF44A8BF),
+                            ),
+                          ),
+                          child: const Text('Sing Up'),
                         ),
                       ],
                     ),
