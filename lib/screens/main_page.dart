@@ -6,7 +6,7 @@ import 'package:mobileprogramming_groupproject_2025/screens/history_page.dart';
 import 'package:mobileprogramming_groupproject_2025/screens/setting_page.dart';
 import 'package:mobileprogramming_groupproject_2025/screens/home_page.dart';
 
-import 'package:mobileprogramming_groupproject_2025/components/CartButton.dart';
+import 'package:mobileprogramming_groupproject_2025/components/cart_button.dart';
 
 
 class MainPage extends StatefulWidget {
@@ -27,10 +27,10 @@ class _MainPageState extends State<MainPage>{
   ];
 
   final List<String> _titles = const [
-    'Home Page',       // _selectedIndex가 0일 때
-    'ChatBot Page',    // _selectedIndex가 1일 때
-    'History Page',    // _selectedIndex가 2일 때
-    'Setting Page',    // _selectedIndex가 3일 때
+    'Home Page',
+    'ChatBot Page',
+    'History Page',
+    'Setting Page',
   ];
 
   void _onItemTapped(int index) {
@@ -50,32 +50,32 @@ class _MainPageState extends State<MainPage>{
             },
           ),
           title: Text(
-            _titles[_selectedIndex], // <--- 여기서 동적으로 제목을 가져옴
+            _titles[_selectedIndex], //제목
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
 
           actions: [
             IconButton(
-              icon: const Icon(Icons.search),
+              icon: const Icon(Icons.search), // 검색
               onPressed: () {
                 print('검색기능 구현');
               },
             ),
-            const CartIcon(),
+            const CartIcon(), // 카트
             const SizedBox(width: 8),
           ]
         ),
         body: IndexedStack(
-          index: _selectedIndex, // 현재 인덱스에 해당하는 위젯만 표시
-          children: _screens, // 모든 화면 위젯 리스트
+          index: _selectedIndex,
+          children: _screens,
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.play_arrow), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'ChatBot'),
-            BottomNavigationBarItem(icon: Icon(Icons.history_toggle_off), label: 'History'),
-            BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'),
+            BottomNavigationBarItem(icon: Icon(Icons.play_arrow), label: 'Home'), // body만 구현
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'ChatBot'), // body만 구현
+            BottomNavigationBarItem(icon: Icon(Icons.history_toggle_off), label: 'History'), // body만 구현
+            BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'), // body만 구현
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: Colors.blue,

@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:mobileprogramming_groupproject_2025/models/cosmetic_item.dart';
+import 'package:mobileprogramming_groupproject_2025/providers/cart_provider.dart';
 
-class CustomListItem extends StatelessWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class CosmeticInfoWidget extends ConsumerWidget {
   // final Image  image;
-  final String title;
-  final double rating;
-  final String category;
-  final String priceRange;
-  final String supportingText;
+  final CosmeticItem item;
 
-  const CustomListItem({
+  const CosmeticInfoWidget({
     super.key,
-    required this.title,
-    required this.rating,
-    required this.category,
-    required this.priceRange,
-    required this.supportingText,
+    required this.item
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // 텍스트와 별점 영역을 가로로 나누는 Row를 포함한 전체 컨테이너
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -28,7 +24,7 @@ class CustomListItem extends StatelessWidget {
           // 1. 왼쪽 아이콘/이미지 영역
           Container(
             width: 70,
-            height: 70,
+            height: 80,
             decoration: BoxDecoration(
               color: Colors.grey[300], // 배경 회색
               borderRadius: BorderRadius.circular(10), // 둥근 모서리
@@ -52,7 +48,7 @@ class CustomListItem extends StatelessWidget {
                   children: [
                     // 제목
                     Text(
-                      title,
+                      item.title,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -63,6 +59,13 @@ class CustomListItem extends StatelessWidget {
                     // 별점 및 하트 아이콘
                     Row(
                       children: [
+                        IconButton(
+                            onPressed: () {
+                              ref.read(cartProvider.notifier).addItem(item);
+                              print('장바구니에 아이템 추가!');
+                            },
+                            icon:  Icon(Icons.add_shopping_cart, color: Colors.grey, size: 20),
+                        ),
                         const SizedBox(width: 8),
                         const Icon(Icons.favorite_border, color: Colors.grey, size: 20),
                       ],
@@ -70,11 +73,11 @@ class CustomListItem extends StatelessWidget {
                   ],
                 ),
 
-                const SizedBox(height: 4),
+                const SizedBox(height: 1),
 
                 // 2-2. 카테고리, 가격대, 거리 영역 (Row)
                 Text(
-                  '$category • $priceRange',
+                  item.category + "-" + item.priceRange,
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey[600],
@@ -85,7 +88,7 @@ class CustomListItem extends StatelessWidget {
 
                 // 2-3. 하단 설명 텍스트
                 Text(
-                  supportingText,
+                  item.supportingText,
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.grey[700],
