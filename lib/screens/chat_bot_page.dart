@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ChatBotPage extends StatelessWidget{
+class ChatBotPage extends StatelessWidget{ // 이름은 같게 수정 요망
   const ChatBotPage({super.key});
 
   @override

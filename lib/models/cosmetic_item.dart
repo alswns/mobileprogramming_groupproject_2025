@@ -1,4 +1,4 @@
-class CosmeticItem {
+class CosmeticItem { // 화장품 데이터 예시..
   final String title;
   final double rating;
   final String category;

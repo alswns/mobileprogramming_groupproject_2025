@@ -4,8 +4,8 @@ import 'package:mobileprogramming_groupproject_2025/providers/cart_provider.dart
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CosmeticInfoWidget extends ConsumerWidget {
-  // final Image  image;
+class CosmeticInfoWidget extends ConsumerWidget { //화장품 설명 위젯
+  // final Image  image; 나중에 이미지 추가를 위해 일단은..
   final CosmeticItem item;
 
   const CosmeticInfoWidget({
@@ -15,13 +15,13 @@ class CosmeticInfoWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // 텍스트와 별점 영역을 가로로 나누는 Row를 포함한 전체 컨테이너
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start, // 상단 정렬
         children: <Widget>[
-          // 1. 왼쪽 아이콘/이미지 영역
+          //왼쪽 아이콘/이미지 영역
           Container(
             width: 70,
             height: 80,
@@ -37,12 +37,12 @@ class CosmeticInfoWidget extends ConsumerWidget {
 
           const SizedBox(width: 12), // 아이콘과 텍스트 사이 간격
 
-          // 2. 오른쪽 텍스트/정보 영역 (남은 공간 모두 차지)
+          // 오른쪽 텍스트/정보 영역 (남은 공간 모두 차지)
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
               children: <Widget>[
-                // 2-1. 제목 및 별점 영역 (Row)
+                // 제목 영역, 별점 나중에 구현
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -56,7 +56,7 @@ class CosmeticInfoWidget extends ConsumerWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
 
-                    // 별점 및 하트 아이콘
+                    // 하트 아이콘 눌렸을 때 상태 구현해야됨
                     Row(
                       children: [
                         IconButton(
@@ -75,7 +75,7 @@ class CosmeticInfoWidget extends ConsumerWidget {
 
                 const SizedBox(height: 1),
 
-                // 2-2. 카테고리, 가격대, 거리 영역 (Row)
+                // 카테고리, 가격
                 Text(
                   item.category + "-" + item.priceRange,
                   style: TextStyle(
@@ -86,7 +86,7 @@ class CosmeticInfoWidget extends ConsumerWidget {
 
                 const SizedBox(height: 4),
 
-                // 2-3. 하단 설명 텍스트
+                // 하단 설명 텍스트
                 Text(
                   item.supportingText,
                   style: TextStyle(

@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter 라우트 예제',
+      title: 'mobileprogramming-groupproject',
       initialRoute: '/home',
       routes: {
         '/home' : (context) => MainPage(),

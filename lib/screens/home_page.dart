@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobileprogramming_groupproject_2025/widgets/cosmetic_info_widget.dart';
 import 'package:mobileprogramming_groupproject_2025/models/cosmetic_item.dart';
+import 'package:mobileprogramming_groupproject_2025/widgets/search_widget.dart';
 
 class HomePage extends StatefulWidget{
   const HomePage({super.key});
@@ -26,14 +27,41 @@ class _HomePageState extends State<HomePage>{
   ];
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: cosmeticItems.length,
-      itemBuilder: (BuildContext context, int index) {
-        final item = cosmeticItems[index];
-        return CosmeticInfoWidget(
-          item: item,
-        );
-      },
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverToBoxAdapter( // 같이 스크롤 하기 위해서
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
+                child: SearchWidget(text: '검색할 상품을 입력하세요.'),// 입력 나중에 입력 처리 구현
+              ),
+
+
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0, left: 16.0, right: 16.0),
+                child: SearchWidget(text: '가능한 예산을 입력하세요.'),// 입력 나중에 입력 처리 구현
+              ),
+              const Divider(height: 1, thickness: 1), // 리스트와의 구분선
+            ],
+          ),
+        ),
+
+        // 상품 영역
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+              final item = cosmeticItems[index];
+              return CosmeticInfoWidget(
+                item: item,
+              );
+            },
+            childCount: cosmeticItems.length,
+          ),
+        ),
+      ],
     );
   }
 }

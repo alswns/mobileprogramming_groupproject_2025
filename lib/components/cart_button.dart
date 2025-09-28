@@ -2,8 +2,7 @@ import  'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobileprogramming_groupproject_2025/providers/cart_provider.dart';
 
-class CartIcon extends ConsumerWidget {
-  // App Bar에서 사용할 CartIcon
+class CartIcon extends ConsumerWidget {// App Bar에서 사용할 CartIcon
   const CartIcon({super.key});
 
   @override
@@ -18,7 +17,7 @@ class CartIcon extends ConsumerWidget {
               print('장바구니 페이지');
             },
         ),
-        if (itemCount > 0)
+        if (itemCount > 0) // 장바구니에 아이템 있을 때 위의 조그만 원
           Positioned(
             right: 0,
             top: 0,
