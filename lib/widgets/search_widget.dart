@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 
 class SearchWidget extends StatefulWidget{// 검색창 위젯
   final String text;
-  SearchWidget({super.key, required this.text});
+  final TextEditingController controller;
+  final Function(String) onChanged;
+  SearchWidget({super.key, required this.text, required this.controller, required this.onChanged});
 
   State <SearchWidget> createState() => _SearchWidgetState();
 }
 
 class _SearchWidgetState extends State<SearchWidget>{
-
   @override
   Widget build(BuildContext context){
+
     return Container(
      decoration: BoxDecoration(
        borderRadius: BorderRadius.circular(10),
@@ -19,6 +21,7 @@ class _SearchWidgetState extends State<SearchWidget>{
        ),
      ),
      child: TextField(
+       controller: widget.controller,
        decoration: InputDecoration(
          hintText: widget.text,
          prefixIcon: Icon(Icons.search), // 검색 아이콘
@@ -26,7 +29,7 @@ class _SearchWidgetState extends State<SearchWidget>{
          contentPadding: EdgeInsets.all(16.0),
        ),
        onChanged: (value) {
-        // 여기 나중에 구현...
+        widget.onChanged(value);
        },
      ),
 

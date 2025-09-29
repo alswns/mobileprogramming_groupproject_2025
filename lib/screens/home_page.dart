@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobileprogramming_groupproject_2025/providers/search_provider.dart';
 import 'package:mobileprogramming_groupproject_2025/widgets/cosmetic_info_widget.dart';
 import 'package:mobileprogramming_groupproject_2025/models/cosmetic_item.dart';
 import 'package:mobileprogramming_groupproject_2025/widgets/search_widget.dart';
 
-class HomePage extends StatefulWidget{
+class HomePage extends ConsumerStatefulWidget{
   const HomePage({super.key});
   @override
-  State <HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>{
+class _HomePageState extends ConsumerState<HomePage>{
   // 예시 데이터
   final List<CosmeticItem> cosmeticItems = [
     CosmeticItem(title: '보습 크림', rating: 5, category: '스킨케어', priceRange: '2만원대', supportingText: '겨울철 보습에 탁월'),
@@ -27,22 +29,44 @@ class _HomePageState extends State<HomePage>{
   ];
   @override
   Widget build(BuildContext context) {
+    final notifier = ref.read(searchWidgetProvider.notifier);
     return CustomScrollView(
       slivers: <Widget>[
-        SliverToBoxAdapter( // 같이 스크롤 하기 위해서
+        SliverToBoxAdapter(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
 
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, left: 16.0, right: 16.0),
-                child: SearchWidget(text: '검색할 상품을 입력하세요.'),// 입력 나중에 입력 처리 구현
+                child: SearchWidget(
+                  text: '검색할 상품을 입력하세요.',
+                  controller: notifier.namecontroller,
+                  onChanged: (value) {
+                    notifier.updateType(value);
+                  },
+                ),
               ),
 
-
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0, left: 16.0, right: 16.0),
-                child: SearchWidget(text: '가능한 예산을 입력하세요.'),// 입력 나중에 입력 처리 구현
+                padding: const EdgeInsets.only(top: 4.0 ,bottom: 8.0, left: 16.0, right: 16.0),
+                child: SearchWidget(
+                 text: '가능한 예산을 입력하세요.',
+                 controller: notifier.pricecontroller,
+                 onChanged: (value) {
+                    notifier.updatePrice(value);
+                  },
+                ),
+              ),
+
+              ElevatedButton(
+                onPressed: () {
+                  if(notifier.state.type.isNotEmpty || notifier.state.price.isNotEmpty){
+                    print('페이지 이동');// 페이지 이동 구현
+                  }
+                  notifier.saveData();
+                },
+                child: const Text('검색'),
               ),
               const Divider(height: 1, thickness: 1), // 리스트와의 구분선
             ],
