@@ -4,11 +4,7 @@ import 'package:mobileprogramming_groupproject_2025/screens/login_page.dart';
 import 'package:mobileprogramming_groupproject_2025/screens/main_page.dart';
 
 void main() {
-  runApp(
-      const ProviderScope(
-          child: MyApp(),
-      ),
-  );
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,9 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'mobileprogramming-groupproject',
-      initialRoute: '/home',
+      initialRoute: '/login',
       routes: {
-        '/home' : (context) => MainPage(),
+        '/home': (context) => MainPage(),
         '/login': (context) => LoginPage(),
         // '/second': (context) => SecondPage(),
       },
