@@ -19,7 +19,6 @@ class CosmeticInfoWidget extends ConsumerWidget { //화장품 설명 위젯
     return InkWell(
       // 탭했을 때 실행할 콜백 함수를 여기에 작성합니다.
         onTap: () {
-          // TODO: 위젯이 탭되었을 때 수행할 작업을 여기에 추가하세요.
           print('${item.title} 위젯 상세 페이지 이동');
         },
         child : Padding(
