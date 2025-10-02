@@ -1,28 +1,19 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mobileprogramming_groupproject_2025/screens/singUp_page.dart';
-
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-final storage = FlutterSecureStorage();
-
-// 토큰 저장
+import 'package:dio/dio.dart';
 
 final dio = Dio();
 
-class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+class SingupPage extends StatefulWidget {
+  SingupPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPage();
+  State<SingupPage> createState() => _SingupPage();
 }
 
-class _LoginPage extends State<LoginPage> {
-  String email = "", password = "";
+class _SingupPage extends State<SingupPage> {
+  String email = "", password = "", username = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +47,15 @@ class _LoginPage extends State<LoginPage> {
                         onChanged: (value) => email = value,
                         decoration: InputDecoration(labelText: 'Enter email'),
                         keyboardType: TextInputType.emailAddress,
+                        style: TextStyle(fontSize: 18, height: 2),
+                      ),
+                      TextField(
+                        onChanged: (value) => username = value,
+                        decoration: InputDecoration(
+                          labelText: 'Enter username',
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        style: TextStyle(fontSize: 18, height: 2),
                       ),
                       TextField(
                         onChanged: (value) => password = value,
@@ -64,51 +64,35 @@ class _LoginPage extends State<LoginPage> {
                         ),
                         keyboardType: TextInputType.text,
                         obscureText: true, // 비밀번호 안보이도록 하는 것
+                        style: TextStyle(fontSize: 18, height: 2),
                       ),
+
                       SizedBox(height: 40.0),
-
-                      ElevatedButton(
-                        onPressed: () async {
-                          final response = await singInAction(email, password);
-                          if (response == true && context.mounted) {
-                            Navigator.pushNamedAndRemoveUntil(
-                              context,
-                              '/main',
-                              (Route<dynamic> route) => false, // 이전 모든 라우트 제거
-                            );
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue, // 배경색
-                          foregroundColor: Colors.white, // 글자색
-                          minimumSize: const Size(
-                            double.infinity,
-                            50,
-                          ), // 최소 크기 (너비, 높이)
-                          elevation: 5, // 그림자 깊이
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5), // 둥근 모서리
-                          ),
-
-                          textStyle: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF44A8BF),
-                          ),
-                        ),
-                        child: const Text('Login'),
-                      ),
 
                       SizedBox(height: 10.0),
 
                       ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SingupPage(),
-                            ),
-                          );
+                        onPressed: () async {
+                          try {
+                            final response = await dio.post(
+                              'http://52.78.1.108:8080/users/register',
+                              data: {
+                                "email": email,
+                                "username": username,
+                                "password": password,
+                              },
+                            );
+                            print(response.statusCode);
+                            if (response.statusCode == 201) {
+                              Fluttertoast.showToast(msg: "Sucess!!");
+                              Navigator.pop(context);
+                            }
+                          } on DioException catch (e) {
+                            if (e.response?.statusCode == 400)
+                              Fluttertoast.showToast(
+                                msg: "already exist email",
+                              );
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white, // 배경색
@@ -147,29 +131,4 @@ class _LoginPage extends State<LoginPage> {
   }
 }
 
-Future<bool> singInAction(String email, String password) async {
-  try {
-    final response = await dio.post(
-      'http://52.78.1.108:8080/users/login',
-      data: {"email": email, "password": password},
-    );
-    print(response.statusCode);
-    if (response.statusCode == 200) {
-      Fluttertoast.showToast(msg: "Success!!");
-      Map<String, dynamic> data = response.data;
-      final refreshToken = data['refresh_token'] as String;
-      final accessToken = data['access_token'] as String;
-
-      await storage.write(key: 'access_token', value: accessToken);
-      await storage.write(key: 'refresh_token', value: refreshToken);
-
-      return true;
-    }
-    return false;
-  } on DioException catch (e) {
-    if (e.response?.statusCode == 404) Fluttertoast.showToast(msg: "error");
-    return false;
-  }
-}
-
-void SingOutAction(String email, String password) {}
+void SingOutAction(String email, String username, String password) {}

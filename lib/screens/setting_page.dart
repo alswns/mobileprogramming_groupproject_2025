@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SettingPage extends StatefulWidget{// 이름은 같게 수정 요망
+class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
-
-  /*@override
-  Widget build(BuildContext context){
-    return Text('SettingPage');*/
   @override
   State<SettingPage> createState() => _SettingPageState();
 }
@@ -28,7 +24,7 @@ class _SettingPageState extends State<SettingPage> {
 
       // AppBar는 유지하되 높이를 0으로 만들어 레이아웃 차지 X
       appBar: AppBar(
-        toolbarHeight: 10, // 핵심
+        toolbarHeight: 0, // 핵심
         elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: const Color(0xFFF4EEF6),
@@ -91,7 +87,7 @@ class _SettingPageState extends State<SettingPage> {
               ),
             ),
 
-            const SizedBox(height: 0),
+            const SizedBox(height: 20),
 
             ListTile(
               title: const Text('notification'),
@@ -118,6 +114,10 @@ class _SettingPageState extends State<SettingPage> {
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: const [
+                  DecoratedBox(
+                    decoration: BoxDecoration(color: Color(0xFFB046E3), shape: BoxShape.circle),
+                    child: SizedBox(width: 8, height: 8),
+                  ),
                   SizedBox(width: 8),
                   Icon(Icons.chevron_right),
                 ],
@@ -178,4 +178,3 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 }
-
