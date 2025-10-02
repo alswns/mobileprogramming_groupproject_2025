@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+final storage = FlutterSecureStorage();
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -11,6 +14,16 @@ class _SettingPageState extends State<SettingPage> {
   bool darkMode = false;
 
   int currentIndex = 3;
+
+  Future<void> _logout(BuildContext context) async {
+    await storage.delete(key: 'access_token');
+    await storage.delete(key: 'refresh_token');
+
+    // 토큰 삭제 후 홈 화면으로 이동 (해당 라우트 이름이 '/' 라고 가정)
+    Navigator.of(
+      context,
+    ).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+  }
 
   void onBottomTap(int idx) {
     setState(() => currentIndex = idx);
@@ -37,8 +50,7 @@ class _SettingPageState extends State<SettingPage> {
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 16), // top=0로 바로 붙이기
           children: [
             // 프로필 카드
-            Container
-              (
+            Container(
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(14),
@@ -48,7 +60,9 @@ class _SettingPageState extends State<SettingPage> {
                 children: [
                   CircleAvatar(
                     radius: 22,
-                    backgroundColor: theme.colorScheme.primary.withOpacity(0.15),
+                    backgroundColor: theme.colorScheme.primary.withOpacity(
+                      0.15,
+                    ),
                     child: const Text('A'),
                   ),
                   const SizedBox(width: 12),
@@ -56,9 +70,18 @@ class _SettingPageState extends State<SettingPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Puang', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                        Text(
+                          'Puang',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                         SizedBox(height: 4),
-                        Text('dry skin, sensitive skin, 23, male', style: TextStyle(color: Colors.grey)),
+                        Text(
+                          'dry skin, sensitive skin, 23, male',
+                          style: TextStyle(color: Colors.grey),
+                        ),
                       ],
                     ),
                   ),
@@ -68,10 +91,20 @@ class _SettingPageState extends State<SettingPage> {
                         context: context,
                         builder: (_) => AlertDialog(
                           title: const Text('Logout'),
-                          content: const Text('Are you sure you want to logout?'),
+                          content: const Text(
+                            'Are you sure you want to logout?',
+                          ),
                           actions: [
-                            TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-                            FilledButton(onPressed: () {/* TODO: logout */}, child: const Text('Yes')),
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('Cancel'),
+                            ),
+                            FilledButton(
+                              onPressed: () async {
+                                _logout(context);
+                              },
+                              child: const Text('Yes'),
+                            ),
                           ],
                         ),
                       );
@@ -79,9 +112,15 @@ class _SettingPageState extends State<SettingPage> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF7451B6),
                       shape: const StadiumBorder(),
-                      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 18,
+                        vertical: 10,
+                      ),
                     ),
-                    child: const Text('Logout', style: TextStyle(color: Colors.white)),
+                    child: const Text(
+                      'Logout',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),
@@ -115,7 +154,10 @@ class _SettingPageState extends State<SettingPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: const [
                   DecoratedBox(
-                    decoration: BoxDecoration(color: Color(0xFFB046E3), shape: BoxShape.circle),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFB046E3),
+                      shape: BoxShape.circle,
+                    ),
                     child: SizedBox(width: 8, height: 8),
                   ),
                   SizedBox(width: 8),
