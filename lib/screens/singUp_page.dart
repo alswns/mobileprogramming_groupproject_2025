@@ -75,7 +75,7 @@ class _SingupPage extends State<SingupPage> {
                         onPressed: () async {
                           try {
                             final response = await dio.post(
-                              'http://52.78.1.108:8080/users/register',
+                              'http://43.203.250.50:8080//users/register',
                               data: {
                                 "email": email,
                                 "username": username,
