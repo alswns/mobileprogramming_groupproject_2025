@@ -12,7 +12,7 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   bool counseling24x7 = true;
   bool darkMode = false;
-
+//test
   int currentIndex = 3;
 
   Future<void> _logout(BuildContext context) async {
