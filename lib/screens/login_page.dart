@@ -150,7 +150,7 @@ class _LoginPage extends State<LoginPage> {
 Future<bool> singInAction(String email, String password) async {
   try {
     final response = await dio.post(
-      'http://52.78.1.108:8080/users/login',
+      'http://43.203.250.50:8080//users/login',
       data: {"email": email, "password": password},
     );
     print(response.statusCode);
