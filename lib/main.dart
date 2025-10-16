@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobileprogramming_groupproject_2025/screens/login_page.dart';
 import 'package:mobileprogramming_groupproject_2025/screens/main_page.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mobileprogramming_groupproject_2025/screens/skin_sensitivity_page.dart';
+import 'package:mobileprogramming_groupproject_2025/screens/skin_type_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
